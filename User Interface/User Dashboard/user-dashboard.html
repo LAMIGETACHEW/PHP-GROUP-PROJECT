@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Dashboard | Resource Center</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+      body {
+        display: flex;
+        background-color: #f4f4f4;
+      }
+
+
+      .sidebar {
+        width: 250px;
+        height: 100vh;
+        background: linear-gradient(135deg, #0073e6, #005bb5);
+        color: white;
+        padding: 20px;
+        position: fixed;
+        transition: all 0.3s ease-in-out;
+      }
+      .sidebar h2 {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      .sidebar ul {
+        list-style: none;
+      }
+      .sidebar ul li {
+        padding: 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s ease-in-out;
+      }
+      .sidebar ul li:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+  
+      .main-content {
+        margin-left: 250px;
+        width: calc(100% - 250px);
+        padding: 20px;
+        transition: all 0.3s ease-in-out;
+      }
+      .top-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: white;
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+      }
+      .search-bar {
+        width: 70%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        outline: none;
+      }
+
+ 
+      .filters {
+        margin-top: 20px;
+        display: flex;
+        gap: 10px;
+      }
+      select,
+      .btn {
+        padding: 8px;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+      }
+      .btn {
+        background: #0073e6;
+        color: white;
+        cursor: pointer;
+      }
+
+  
+      .resource-list {
+        margin-top: 20px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+      }
+      .resource-card {
+        width: 200px;
+        padding: 15px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        transition: transform 0.3s ease-in-out;
+      }
+      .resource-card:hover {
+        transform: translateY(-5px);
+      }
+      .borrow-btn {
+        margin-top: 10px;
+        padding: 8px;
+        background: #0073e6;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      .borrow-btn:disabled {
+        background: #aaa;
+        cursor: not-allowed;
+      }
+
+    
+      .profile-section {
+        display: none;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        margin-top: 20px;
+      }
+      .profile-card {
+        background: #0073e6;
+        color: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+      }
+      .profile-card img {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        margin-bottom: 20px;
+      }
+      .profile-card h3 {
+        margin: 10px 0;
+      }
+      .profile-card p {
+        color: #ddd;
+        font-size: 16px;
+      }
+      .edit-btn {
+        background: #005bb5;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+   
+    <div class="sidebar">
+      <h2>Dashboard</h2>
+      <ul>
+        <li onclick="showSection('home')">🏠 Home</li>
+        <li onclick="showSection('search')">🔍 Search Resources</li>
+        <li onclick="showSection('borrowed')">📚 Borrowed Items</li>
+        <li onclick="showSection('profile')">👤 Profile</li>
+      </ul>
+    </div>
+
+   
+    <div class="main-content">
+ 
+      <div class="top-bar">
+        <input
+          type="text"
+          class="search-bar"
+          id="searchInput"
+          placeholder="Search for resources..."
+          onkeyup="searchResources()"
+        />
+      </div>
+
+
+      <div class="filters">
+        <select id="categoryFilter">
+          <option value="">Category</option>
+          <option value="Book">Book</option>
+          <option value="Journal">Journal</option>
+          <option value="Article">Article</option>
+        </select>
+        <select id="availabilityFilter">
+          <option value="">Availability</option>
+          <option value="Available">Available</option>
+          <option value="Borrowed">Borrowed</option>
+        </select>
+        <button class="btn" onclick="filterResources()">Apply Filters</button>
+      </div>
+
+    
+      <div class="resource-list" id="resourceList">
+      
+        <div
+          class="resource-card"
+          data-category="Book"
+          data-availability="Available"
+        >
+          <h3>Book 1</h3>
+          <p>Author: John Doe</p>
+          <p>Status: Available</p>
+          <button class="borrow-btn" onclick="borrowResource(this)">
+            Borrow
+          </button>
+        </div>
+        <div
+          class="resource-card"
+          data-category="Journal"
+          data-availability="Borrowed"
+        >
+          <h3>Journal 1</h3>
+          <p>Author: Jane Smith</p>
+          <p>Status: Borrowed</p>
+          <button class="borrow-btn" disabled>Borrowed</button>
+        </div>
+      </div>
+
+  
+      <div class="history" id="borrowed" style="display: none">
+        <h2>Borrowing History</h2>
+        <ul id="borrowHistory"></ul>
+      </div>
+
+      <div class="profile-section" id="profile">
+        <div class="profile-card">
+          <img src="https://via.placeholder.com/150" alt="Profile Picture" />
+          <h3>John Doe</h3>
+          <p>Email: johndoe@example.com</p>
+          <p>Member since: January 2023</p>
+          <button class="edit-btn">Edit Profile</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function showSection(section) {
+        document.getElementById("borrowed").style.display = "none";
+        document.getElementById("profile").style.display = "none";
+        if (section === "borrowed") {
+          document.getElementById("borrowed").style.display = "block";
+        } else if (section === "profile") {
+          document.getElementById("profile").style.display = "block";
+        }
+      }
+
+      function borrowResource(button) {
+        button.innerText = "Borrowed";
+        button.disabled = true;
+        let bookTitle = button.parentElement.querySelector("h3").innerText;
+        let history = document.getElementById("borrowHistory");
+        let newItem = document.createElement("li");
+        newItem.innerText = bookTitle + " - Borrowed";
+        history.appendChild(newItem);
+      }
+
+      function searchResources() {
+        let input = document.getElementById("searchInput").value.toLowerCase();
+        let resources = document.querySelectorAll(".resource-card");
+
+        resources.forEach((resource) => {
+          let title = resource.querySelector("h3").innerText.toLowerCase();
+          resource.style.display = title.includes(input) ? "block" : "none";
+        });
+      }
+
+      function filterResources() {
+        let category = document.getElementById("categoryFilter").value;
+        let availability = document.getElementById("availabilityFilter").value;
+        let resources = document.querySelectorAll(".resource-card");
+
+        resources.forEach((resource) => {
+          let matchesCategory =
+            category === "" || resource.dataset.category === category;
+          let matchesAvailability =
+            availability === "" ||
+            resource.dataset.availability === availability;
+          resource.style.display =
+            matchesCategory && matchesAvailability ? "block" : "none";
+        });
+      }
+    </script>
+  </body>
+</html>
