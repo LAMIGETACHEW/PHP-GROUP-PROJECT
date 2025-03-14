@@ -1,6 +1,7 @@
 <?php
 session_start();
 session_destroy();
-header("Location: login-registration.html");
+
+header("Location: ../index.html");
 exit;
 ?>

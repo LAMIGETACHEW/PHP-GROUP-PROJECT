@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resource Center - Home</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>Resource Center</h1>
+            <p>Your Gateway to Knowledge</p>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#" id="showLogin" class="login-btn">Login</a></li>
+                <li><a href="#" id="showRegister" class="register-btn">Register</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h2>Welcome to the Resource Center</h2>
+            <p>Access a vast collection of books, journals, and articles. Manage your borrowings and explore resources with ease.</p>
+            <div class="cta-buttons">
+                <a href="#" id="showLoginHero" class="btn">Login</a>
+                <a href="#" id="showRegisterHero" class="btn">Register</a>
+            </div>
+        </section>
+
+        <!-- System Information Section -->
+        <section class="system-info">
+            <div class="info-card">
+                <h3>📚 Extensive Collection</h3>
+                <p>Explore thousands of books, journals, and articles across various categories.</p>
+            </div>
+            <div class="info-card">
+                <h3>⏱️ Easy Borrowing</h3>
+                <p>Borrow resources with just a few clicks and manage your loans online.</p>
+            </div>
+            <div class="info-card">
+                <h3>🔍 Advanced Search</h3>
+                <p>Find resources quickly with our powerful search and filtering options.</p>
+            </div>
+        </section>
+
+        <!-- Overlay for Login and Register -->
+        <div id="overlay" class="overlay">
+            <div class="form-container">
+                <div id="loginForm" class="form active">
+                    <h2>Login</h2>
+                    <div class="info-message">
+                        <p>For checking <strong>Admin Dashboard</strong>, use:<br>
+                        Email: <code>admin@resourcecenter.com</code><br>
+                        Password: <code>admin</code></p>
+                        <p>For checking <strong>User Dashboard</strong>, please register as a user and then login.</p>
+                    </div>
+                    <form action="Backend/login.php" method="post" onsubmit="return validateLogin()">
+                        <div class="form-group">
+                            <input type="email" id="loginEmail" placeholder="Email" name = "email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="loginPassword" placeholder="Password" name= "password" required>
+                        </div>
+                        <button type="submit" class="btn">Login</button>
+                        <p>Don't have an account? <a href="#" id="switchToRegister">Register</a></p>
+                    </form>
+                </div>
+
+                <div id="registerForm" class="form">
+                    <h2>Register</h2>
+                    <form action="Backend/register.php" method="POST" onsubmit="return validateRegister()">
+                        <div class="form-group">
+                            <input type="text" id="registerName" placeholder="Full Name" name="full_name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="registerEmail" placeholder="Email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="registerPassword" placeholder="Password"name= "password"  required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="confirmPassword" placeholder="Confirm Password" name="password" required>
+                        </div>
+                        <button type="submit" class="btn">Register</button>
+                        <p>Already have an account? <a href="#" id="switchToLogin">Login</a></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Resource Center Management System. All rights reserved.</p>
+    </footer>
+
+    <script src="index.js"></script>
+</body>
+</html>

@@ -38,7 +38,7 @@ if ($conn->query($tableQuery) === FALSE) {
 
 
 
-$email = "fufawakjira@gmail.com";
+$email = "admin@resourcecenter.com";
 $password = "admin"; 
 $role = "Admin";
 
@@ -46,5 +46,41 @@ $insertQuery = "INSERT IGNORE INTO users (full_name, email, password, role)
                 VALUES ('Admin User', '$email', '$password', '$role')";
 
 $conn->query($insertQuery);
+
+// Create resources table if it does not exist
+$resourcesTableQuery = "CREATE TABLE IF NOT EXISTS resources (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    author VARCHAR(255) NOT NULL,
+    category VARCHAR(100) NOT NULL,
+    file_path VARCHAR(255) DEFAULT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)";
+
+if ($conn->query($resourcesTableQuery) === FALSE) {
+    die("Error creating resources table: " . $conn->error);
+}
+
+
+
+$borrowingOverviewTableQuery = "CREATE TABLE IF NOT EXISTS borrowings (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    resource_id INT NOT NULL,
+    borrow_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    return_date TIMESTAMP NULL,
+    status ENUM('Borrowed', 'Returned') DEFAULT 'Borrowed',
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (resource_id) REFERENCES resources(id) ON DELETE CASCADE
+)";
+
+
+if ($conn->query($borrowingOverviewTableQuery) === FALSE) {
+    die("Error creating Borrowing Overview table: " . $conn->error);
+}
+
+
+
+
 
 ?>
