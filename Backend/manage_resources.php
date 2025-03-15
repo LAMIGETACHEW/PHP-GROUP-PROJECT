@@ -107,7 +107,7 @@ $result = $conn->query("SELECT * FROM resources");
     </main>
 
     <footer>
-        <p>&copy; 2023 Resource Center Management System. All rights reserved.</p>
+        <p>&copy; 2025 Resource Center Management System. All rights reserved.</p>
     </footer>
 </body>
 </html>

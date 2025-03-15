@@ -90,7 +90,7 @@ $result = $conn->query("SELECT b.id, u.full_name, r.title, b.borrow_date, b.retu
     </main>
 
     <footer>
-        <p>&copy; 2023 Resource Center Management System. All rights reserved.</p>
+        <p>&copy; 2025 Resource Center Management System. All rights reserved.</p>
     </footer>
 </body>
 </html>
